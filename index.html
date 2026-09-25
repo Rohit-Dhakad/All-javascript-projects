@@ -3,30 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css"> 
+  <title>Drag and Drop </title>
+  <style>
+    *{
+  margin: 0;
+  padding: 0;;
+  box-sizing: border-box;
+}
+
+.container{
+  height : 100vh ;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#left , #right {
+  width : 300px ;
+  min-height: 400px;
+  border: 2px dashed white;
+  margin: 20px;
+}
+
+.list{
+  height: 60px ;
+  background-color: blueviolet;
+  margin: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab ; 
+}
+  </style>
+  
 </head>
 <body>
-  <div class="taskInput">
-     <input class="inputTag" type="text">
-  <button class="addBtn">Add</button>
+  <div class="container">
+    <div id="left">
+      <div class="list" draggable="true">this is a list 01</div>
+        <div class="list" draggable="true">this is a list 02</div>
+          <div class="list" draggable="true">this is a list 03</div>
+            <div class="list" draggable="true">this is a list 04</div>
+    </div> 
+    <div id="right"></div>
   </div>
-  <div class="taskContainer">
-    <!-- <div class="task">
-      <p  contentedittable="false"  id="task">this is your task </p>
-      <div class="icons">
-        <button id="taskcompletebtn"  class="completebtn">complete</button>
-                 <svg
-                
-                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM9 11V17H11V11H9ZM13 11V17H15V11H13ZM9 4V6H15V4H9Z"></path></svg>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.8995 6.85453L17.1421 11.0972L7.24264 20.9967H3V16.754L12.8995 6.85453ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path></svg>
-
-      </div>
-
-    </div> -->
-  </div>
-    
-  
 </body>
-<script src="script.js" ></script>
+<script>
+ const lists = document.querySelectorAll(".list");
+const leftBox = document.querySelector("#left");
+const rightBox = document.querySelector("#right");
+  
+let selected = null;
+
+
+for (let list of lists) {
+  list.addEventListener("dragstart", function (e) {
+    selected = e.target;
+  });
+}
+
+rightBox.addEventListener("dragover", function (e) {
+  e.preventDefault(); 
+});
+
+rightBox.addEventListener("drop", function (e) {
+  if (selected) {
+    rightBox.appendChild(selected);
+    selected = null;
+  }
+});
+
+leftBox.addEventListener("dragover", function (e) {
+  e.preventDefault(); 
+});
+
+leftBox.addEventListener("drop", function (e) {
+  if (selected) {
+    leftBox.appendChild(selected);
+    selected = null;
+  }
+});
+
+</script>
 </html>
