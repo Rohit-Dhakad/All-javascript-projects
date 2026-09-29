@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QR Code Generator</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 400px;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .container p {
+      font-size: 22px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 20px;
+    }
+
+    #qrText {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 20px;
+      transition: 0.3s;
+    }
+
+    #qrText:focus {
+      border-color: #243b55;
+    }
+
+    .addbtn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #243b55;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .addbtn:hover {
+      background: #141e30;
+      transform: translateY(-2px);
+    }
+
+    #imgBox {
+      width: 180px;
+      margin: 10px auto 20px;
+      text-align: center;
+      display: none;
+    }
+
+    #imgBox.show-img {
+      display: block;
+    }
+
+    #qrImage {
+      width: 160px;
+      height: 160px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .error {
+      border-color: red !important;
+      animation: shake 0.2s linear 3;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+
+      75% {
+        transform: translateX(-5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 450px) {
+      .container {
+        width: 90%;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <p>Enter the text or URL</p>
+
+    <input
+      type="text"
+      placeholder="Text or URL"
+      id="qrText"
+    >
+
+    <div id="imgBox">
+      <img
+        src=""
+        alt="QR Code"
+        id="qrImage"
+      >
+    </div>
+
+    <button class="addbtn">Generate QR</button>
+
+  </div>
+
+
+  <script>
+
+    let imgBox = document.getElementById("imgBox");
+
+    let qrImage = document.getElementById("qrImage");
+
+    let qrText = document.getElementById("qrText");
+
+    let btn = document.querySelector(".addbtn");
+
+
+    btn.addEventListener("click", generateQR);
+
+
+    qrText.addEventListener("keydown", function(event) {
+
+      let key = event.key;
+
+      if (key == "Enter") {
+        generateQR();
+      }
+
+    });
+
+
+    function generateQR() {
+
+      if (qrText.value.length > 0) {
+
+        qrImage.src =
+          "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+          + encodeURIComponent(qrText.value);
+
+        imgBox.classList.add("show-img");
+
+        console.log("QR Generated");
+
+      } else {
+
+        qrText.classList.add("error");
+
+        setTimeout(() => {
+
+          qrText.classList.remove("error");
+
+        }, 1000);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qr code Generator </title>
+   <style>  
+   *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   }
+   body{
+     background-color: rgb(23, 23, 33);
+   }
+
+
+   .container{
+    width : 400px ;
+    padding: 25px 25px;
+    position : absolute;
+    top : 50% ;
+    left: 50% ;
+    transform: translate(-50% , -50%);
+    background: #fff;
+    border-radius: 10px;
+   }
+  
+   
+   </style>
+</head>
+<body>
+  <div class="container">
+    <p>Enter the text or URL</p>
+    <input type="text " placeholder="Text or URL"  id="qrText">
+    <div id="imgBox">
+      <img src="" alt="" class="qrl">
+    </div>
+    <button class="addbtn">generate the qr</button>
+  </div>
+</body>
+<script>
+  let imgBox = document.getElementById("imgBox");
+  let qrImage = document.getElementById("qrImage");
+  let qrText = document.getElementById("qrText");
+  let btn = document.querySelector(".addbtn")
+         
+            btn.addEventListener("click" , generateQR) ;
+
+            qrText.addEventListener("keydown" , function(event){
+                 let key = event.key ;
+                 if(key == "Enter"){
+                  generateQR();
+                  return ;
+                 }
+            })
+
+  function generateQR(){
+    if(qrText.value.length > 0){
+  qrImage.src = " https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value ;
+    console.log("clicked") ;
+    image-Box.classList.add("show-img");
+    }else{
+      qrText.classList.add("error");
+      setTimeout(() => {
+          qrText.classList.remove("error");
+      }, 1000);
+    }
+  }
+</script>
+
+
+</html>
